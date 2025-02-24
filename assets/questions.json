@@ -1,0 +1,109 @@
+[
+    {
+        "question_image": "assets/q1.jpg",
+        "options": [
+            "22 и 24",
+            "22 и 25",
+            "23 и 24",
+            "23 и 25",
+            "24 и 25"
+        ],
+		"correct_answer": "22 и 24"
+	},
+    {
+        "question_image": "assets/q2.jpg",
+        "options": [
+            "Конгрегация",
+            "Дисперсия",
+            "Компиляция",
+            "Собрание",
+            "Скопление"
+        ],
+		"correct_answer": "Дисперсия"
+    },
+    {
+        "question_image": "assets/q3.jpg",
+        "options": [
+            "84 129",
+            "32 418",
+            "47 632",
+            "36 119",
+            "67 626",
+            "72 927"
+        ],
+		"correct_answer": "47 632"
+    },
+    {
+        "question_image": "assets/q4.jpg",
+        "options": [
+            "ИУ",
+            "ЙХ",
+            "РЗ",
+            "ЧЦ",
+            "МЪ"
+        ],
+		"correct_answer": "ЙХ"
+    },
+    {
+        "question_image": "assets/q5.jpg",
+        "options": [
+            "Достигнутый, очевидный",
+            "Производный, судорожный",
+            "Произоводный, загадочный",
+            "Достигнутый, разработанный",
+            "Очевидный, загадочный"
+        ],
+		"correct_answer": "Очевидный, загадочный"
+    },
+    {
+        "question_image": "assets/q6.jpg",
+        "options": [
+            "7",
+            "9",
+            "10",
+            "8",
+            "6"
+        ],
+		"correct_answer": "8"
+    },
+    {
+        "question_image": "assets/q7.jpg",
+        "options": [
+            "2,5 и 3",
+            "6,75 и 1",
+            "4,5 и 15,625",
+            "2 и 1"
+        ],
+		"correct_answer": "2,5 и 3"
+    },
+    {
+        "question_image": "assets/q8.jpg",
+        "options": [
+            "Вертеп, первач",
+            "Стропа, пастор",
+            "Левкас, портал",
+            "Тарпан, кошмар",
+            "Стропа, морока"
+        ],
+		"correct_answer": "Стропа, пастор"
+    },
+    {
+        "question_image": "assets/q9.jpg",
+        "options": [
+            "28",
+            "40",
+            "33",
+            "32"
+        ],
+		"correct_answer": "33"
+    },
+    {
+        "question_image": "assets/q10.jpg",
+        "options": [
+            "Верно",
+            "Неверно",
+            "Невозможно определить"
+        ],
+		"correct_answer": "Верно"
+    }
+]
