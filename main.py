@@ -1,7 +1,7 @@
 import sys
-from ui.menu import Ui_MainWindow
+from ui.MainWindow import MainWindow
 from PySide6.QtWidgets import QApplication
 
 app = QApplication(sys.argv)
-window = Ui_MainWindow()
+window = MainWindow()
 sys.exit(app.exec())
