@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QVBoxLa
 class Menu(QWidget):
     start_quiz_signal = Signal()
     show_settings_signal = Signal()
+    login_signal = Signal()
 
     def __init__(self):
         super().__init__()
@@ -27,19 +28,23 @@ class Menu(QWidget):
         title_container.addWidget(title_label)
         title_container.addStretch()
 
-        menu_layout = QVBoxLayout()
-        menu_layout.setContentsMargins(0, 100, 0, 0)
+        self.menu_layout = QVBoxLayout()
+        self.menu_layout.setContentsMargins(0, 100, 0, 0)
         verticalLayout = QVBoxLayout()
         verticalLayout.setContentsMargins(250, 0, 250, 0)
-        menu_layout.addStretch()
-        menu_layout.addLayout(title_container)
-        menu_layout.addLayout(verticalLayout)
-        menu_layout.addStretch()
+        self.menu_layout.addStretch()
+        self.menu_layout.addLayout(title_container)
+        self.menu_layout.addLayout(verticalLayout)
+        self.menu_layout.addStretch()
 
         play_button = QPushButton("Играть")
         play_button.setEnabled(True)
         play_button.clicked.connect(self.start_quiz)
         verticalLayout.addWidget(play_button)
+
+        login_button = QPushButton("Авторизоваться/Зарегистрироваться")
+        login_button.clicked.connect(self.show_login_form)
+        verticalLayout.addWidget(login_button)
 
         settings_button = QPushButton("Настройки")
         settings_button.setEnabled(True)
@@ -51,10 +56,13 @@ class Menu(QWidget):
         verticalLayout.addWidget(exit_button)
         exit_button.clicked.connect(QApplication.quit)
 
-        self.setLayout(menu_layout)
+        self.setLayout(self.menu_layout)
 
     def start_quiz(self):
         self.start_quiz_signal.emit()
 
     def show_settings(self):
         self.show_settings_signal.emit()
+
+    def show_login_form(self):
+        self.login_signal.emit()

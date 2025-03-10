@@ -1,17 +1,19 @@
 import json
 import os
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QMainWindow, QStackedWidget
+from PySide6.QtCore import Qt, QLocale
+from PySide6.QtWidgets import QMainWindow, QStackedWidget, QLabel
 
 from ui.menu import Menu
 from ui.quiz import Quiz
 from ui.settings import Settings
+from ui.login import Login, Registration
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.settings_file = "core/settings.json"
+        self.is_logged = False
         self.setup_ui()
 
     def load_setting(self, key, default):
@@ -76,6 +78,7 @@ class MainWindow(QMainWindow):
         self.menu_widget = Menu()
         self.menu_widget.start_quiz_signal.connect(self.start_quiz)
         self.menu_widget.show_settings_signal.connect(self.show_settings)
+        self.menu_widget.login_signal.connect(self.show_login_page)
         self.stacked_widget.addWidget(self.menu_widget)
 
         self.quiz_widget = Quiz()
@@ -87,7 +90,18 @@ class MainWindow(QMainWindow):
         self.settings_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.stacked_widget.addWidget(self.settings_widget)
 
-        self.showFullScreen()
+        self.login_widget = Login()
+        self.login_widget.registration_signal.connect(self.show_registration_page)
+        self.login_widget.logged_signal.connect(self.logged)
+        self.login_widget.return_to_menu_signal.connect(self.return_to_menu)
+        self.stacked_widget.addWidget(self.login_widget)
+
+        self.registration_widget = Registration()
+        self.registration_widget.login_signal.connect(self.show_login_page)
+        self.registration_widget.return_to_menu_signal.connect(self.return_to_menu)
+        self.stacked_widget.addWidget(self.registration_widget)
+
+        self.show()
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Escape:
@@ -106,6 +120,10 @@ class MainWindow(QMainWindow):
         """)
         self.save_setting("background_image", backs[choice])
 
+    def logged(self):
+        self.is_logged = True
+        self.menu_widget.menu_layout.addWidget(QLabel("Вы вошли в аккаунт!"))
+
     def return_to_menu(self):
         self.stacked_widget.setCurrentIndex(0)
 
@@ -114,3 +132,9 @@ class MainWindow(QMainWindow):
 
     def show_settings(self):
         self.stacked_widget.setCurrentIndex(2)
+
+    def show_login_page(self):
+        self.stacked_widget.setCurrentIndex(3)
+
+    def show_registration_page(self):
+        self.stacked_widget.setCurrentIndex(4)
