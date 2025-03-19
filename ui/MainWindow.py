@@ -2,18 +2,21 @@ import json
 import os
 from PySide6.QtCore import Qt, QLocale
 from PySide6.QtWidgets import QMainWindow, QStackedWidget, QLabel
+from psycopg2 import sql
 
 from ui.menu import Menu
 from ui.quiz import Quiz
 from ui.settings import Settings
 from ui.login import Login, Registration
+from core.db import connect_db
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.settings_file = "core/settings.json"
-        self.is_logged = False
+        self.username = None
+        self.user_score = 0
         self.setup_ui()
 
     def load_setting(self, key, default):
@@ -63,6 +66,7 @@ class MainWindow(QMainWindow):
         QPushButton {
 	        background-color: rgb(255, 253, 253);
 	        border-radius: 5px;
+	        border: 1px solid rgb(178, 224, 235);
 	        padding: 10px 10px;
 	        color: rgb(55, 107, 113);
 	        font: Poor Richard;
@@ -73,6 +77,19 @@ class MainWindow(QMainWindow):
 	        border: 1px solid rgb(55, 107, 113);
             cursor: pointer;
         }
+        QLineEdit {
+            background-color: rgb(255, 253, 253);
+            border: 2px solid rgb(55, 107, 113);
+            border-radius: 5px;
+            padding: 8px;
+            font: Poor Richard;
+            font-size: 14px;
+            color: rgb(55, 107, 113);
+        }
+        QLineEdit:focus {
+            border: 2px solid rgb(45, 97, 100);
+            outline: none;
+        }
         """)
 
         self.menu_widget = Menu()
@@ -82,7 +99,6 @@ class MainWindow(QMainWindow):
         self.stacked_widget.addWidget(self.menu_widget)
 
         self.quiz_widget = Quiz()
-        self.quiz_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.stacked_widget.addWidget(self.quiz_widget)
 
         self.settings_widget = Settings()
@@ -120,17 +136,44 @@ class MainWindow(QMainWindow):
         """)
         self.save_setting("background_image", backs[choice])
 
-    def logged(self):
-        self.is_logged = True
-        self.menu_widget.menu_layout.addWidget(QLabel("Вы вошли в аккаунт!"))
+    def logged(self, username, score):
+        self.username = username
+        self.menu_widget.account_label.setVisible(True)
+        self.user_score = score
+
+    def update_score(self, score):
+        if score >= self.user_score:
+            self.user_score = score
+            if self.username:
+                conn = connect_db()
+                cursor = conn.cursor()
+                try:
+                    cursor.execute(
+                        sql.SQL("UPDATE users SET high_score = %s WHERE username = %s"),
+                        (score, self.username)
+                    )
+                    conn.commit()
+                except Exception as e:
+                    print(f"Ошибка: {e}")
+                finally:
+                    cursor.close()
+                    conn.close()
+
 
     def return_to_menu(self):
         self.stacked_widget.setCurrentIndex(0)
 
     def start_quiz(self):
+        self.stacked_widget.removeWidget(self.quiz_widget)
+        self.quiz_widget = Quiz()
+        self.quiz_widget.return_to_menu_signal.connect(self.return_to_menu)
+        self.quiz_widget.update_score_signal.connect(self.update_score)
+        self.stacked_widget.insertWidget(1, self.quiz_widget)
         self.stacked_widget.setCurrentIndex(1)
 
     def show_settings(self):
+        self.settings_widget.score_label.setText(f"Ваш лучший счёт: {self.user_score}")
+        self.settings_widget.back_buttons_block(self.user_score)
         self.stacked_widget.setCurrentIndex(2)
 
     def show_login_page(self):

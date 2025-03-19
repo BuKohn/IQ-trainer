@@ -32,13 +32,14 @@ class Menu(QWidget):
         self.menu_layout.setContentsMargins(0, 100, 0, 0)
         verticalLayout = QVBoxLayout()
         verticalLayout.setContentsMargins(250, 0, 250, 0)
+        verticalLayout.setAlignment(Qt.AlignCenter)
         self.menu_layout.addStretch()
         self.menu_layout.addLayout(title_container)
         self.menu_layout.addLayout(verticalLayout)
         self.menu_layout.addStretch()
 
         play_button = QPushButton("Играть")
-        play_button.setEnabled(True)
+        play_button.setFixedWidth(500)
         play_button.clicked.connect(self.start_quiz)
         verticalLayout.addWidget(play_button)
 
@@ -47,14 +48,16 @@ class Menu(QWidget):
         verticalLayout.addWidget(login_button)
 
         settings_button = QPushButton("Настройки")
-        settings_button.setEnabled(True)
         settings_button.clicked.connect(self.show_settings)
         verticalLayout.addWidget(settings_button)
 
         exit_button = QPushButton("Выход")
-        exit_button.setEnabled(True)
         verticalLayout.addWidget(exit_button)
         exit_button.clicked.connect(QApplication.quit)
+
+        self.account_label = QLabel("Вы вошли в аккаунт!")
+        self.account_label.setVisible(False)
+        self.menu_layout.addWidget(self.account_label)
 
         self.setLayout(self.menu_layout)
 

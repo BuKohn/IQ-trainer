@@ -7,6 +7,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QPushButton, QScroll
 
 class Quiz(QWidget):
     return_to_menu_signal = Signal()
+    update_score_signal = Signal(int)
 
     def __init__(self):
         super().__init__()
@@ -63,7 +64,7 @@ class Quiz(QWidget):
         """Проверяет ответ пользователя."""
         question_data = self.questions_data[self.current_question_index]
         if selected_option == question_data["correct_answer"]:
-            self.score += 1
+            self.score += question_data["difficulty"] * 10
 
         # Сохраняем ответ пользователя
         self.user_answers.append({
@@ -72,10 +73,6 @@ class Quiz(QWidget):
             "correct_answer": question_data["correct_answer"],
             "is_correct": selected_option == question_data["correct_answer"]
         })
-
-        # Увеличиваем счетчик правильных ответов
-        if selected_option == question_data["correct_answer"]:
-            self.score += 1
 
         self.current_question_index += 1
         self.show_question()
@@ -93,13 +90,16 @@ class Quiz(QWidget):
         results_layout = QVBoxLayout(results_container)  # Макет для контейнера
 
         # Показываем общий результат
-        result = round(self.score / len(self.questions_data) * 100 + 20)
+        difficulty_sum = sum([self.questions_data[i]["difficulty"] for i in range(len(self.questions_data))])
+        result = round(self.score / difficulty_sum * 10 + 20)
         result_label = QLabel(f"Тест завершен!\nВаш результат: {result} IQ")
         result_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         font = result_label.font()
         font.setPointSize(20)
         result_label.setFont(font)
         results_layout.addWidget(result_label)
+
+        self.update_score(self.score)
 
         # Показываем детализацию по каждому вопросу
         for answer in self.user_answers:
@@ -162,3 +162,6 @@ class Quiz(QWidget):
 
     def return_to_menu(self):
         self.return_to_menu_signal.emit()
+
+    def update_score(self, score):
+        self.update_score_signal.emit(score)
