@@ -1,3 +1,9 @@
 {
-    "background_image": "assets/back1.jpg"
+    "background_image": "assets/back1.jpg",
+    "useful_links": [
+        "Академия Хана https://ru.khanacademy.org/",
+        "Международный тест на IQ https://iq-test-international.net/ru",
+        "Мозгун https://mozgun.ru/"
+    ],
+    "styles": "assets/big_styles.qss"
 }

@@ -1,5 +1,3 @@
-from random import lognormvariate
-
 from PySide6.QtCore import Signal, Qt
 from PySide6.QtWidgets import QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel
 from psycopg2 import sql
@@ -9,7 +7,7 @@ from core.db import connect_db
 
 class Login(QWidget):
     registration_signal = Signal()
-    logged_signal = Signal(str, int)
+    logged_signal = Signal(str, int, list)
     return_to_menu_signal = Signal()
 
     def __init__(self):
@@ -108,7 +106,7 @@ class Login(QWidget):
         try:
             # Проверка существования пользователя
             cursor.execute(
-                sql.SQL("SELECT username, password, high_score FROM users WHERE username = %s"),
+                sql.SQL("SELECT username, password, high_score, achievements FROM users WHERE username = %s"),
                 (username,)
             )
             user = cursor.fetchone()
@@ -117,7 +115,7 @@ class Login(QWidget):
             if user is not None:
                 if user[1] == password:
                     # Успешная авторизация
-                    self.logged(user[0], user[2])
+                    self.logged(user[0], user[2], user[3])
                     self.return_to_menu()
                     self.clear_errors()  # Очищаем ошибки
                     return True
@@ -145,8 +143,8 @@ class Login(QWidget):
         self.username_input.clear()
         self.password_input.clear()
 
-    def logged(self, username, score):
-        self.logged_signal.emit(username, score)
+    def logged(self, username, score, achievements):
+        self.logged_signal.emit(username, score, achievements)
 
     def show_registration_page(self):
         self.registration_signal.emit()

@@ -7,20 +7,16 @@ class Menu(QWidget):
     start_quiz_signal = Signal()
     show_settings_signal = Signal()
     login_signal = Signal()
+    notes_signal = Signal()
 
     def __init__(self):
         super().__init__()
         self.setup_ui()
 
     def setup_ui(self):
-        title_label = QLabel()
+        title_label = QLabel("IQ Trainer")
         title_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        title_label.setText("IQ Trainer")
-        font = QFont()
-        font.setFamilies([u"Poor Richard"])
-        font.setPointSize(30)
-        title_label.setFont(font)
-        title_label.setScaledContents(True)
+        title_label.setStyleSheet("""QLabel{font-size: 30px; font-family: Poor Richard}""")
         title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         title_container = QHBoxLayout()
@@ -51,6 +47,10 @@ class Menu(QWidget):
         settings_button.clicked.connect(self.show_settings)
         verticalLayout.addWidget(settings_button)
 
+        notes_button = QPushButton("Полезные сайты")
+        notes_button.clicked.connect(self.show_notes)
+        verticalLayout.addWidget(notes_button)
+
         exit_button = QPushButton("Выход")
         verticalLayout.addWidget(exit_button)
         exit_button.clicked.connect(QApplication.quit)
@@ -69,3 +69,6 @@ class Menu(QWidget):
 
     def show_login_form(self):
         self.login_signal.emit()
+
+    def show_notes(self):
+        self.notes_signal.emit()

@@ -115,5 +115,115 @@
         ],
 		"correct_answer": "Верно",
         "difficulty": 2
+    },
+    {
+        "question_image": "assets/q11.jpg",
+        "options": [
+            "Включить все выключатели одновременно",
+            "Включить один выключатель, затем выключить его и включить другой",
+            "Включить первый выключатель, подождать, выключить его, включить второй и зайти в комнату",
+            "Это невозможно"
+        ],
+		"correct_answer": "Включить первый выключатель, подождать, выключить его, включить второй и зайти в комнату",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q12.jpg",
+        "options": [
+            "СОБАКА : ДВЕРЬ",
+            "ОБЪЕКТИВ : КАМЕРА",
+            "КЕТЧУП : МАЙОНЕЗ",
+            "САПОГИ : ТУФЛИ"
+        ],
+		"correct_answer": "ОБЪЕКТИВ : КАМЕРА",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q13.jpg",
+        "options": [
+            "8",
+            "10",
+            "81",
+            "30"
+        ],
+		"correct_answer": "10",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q14.jpg",
+        "options": [
+            "64",
+            "1089",
+            "36",
+            "9"
+        ],
+		"correct_answer": "36",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q15.jpg",
+        "options": [
+            "18",
+            "21",
+            "22",
+            "16"
+        ],
+		"correct_answer": "18",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q16.jpg",
+        "options": [
+            "Кор",
+            "Сор",
+            "Рог",
+            "Ром"
+        ],
+		"correct_answer": "Рог",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q17.jpg",
+        "options": [
+            "инчуКаоп",
+            "нрАамикое",
+            "сессрЭпо",
+            "талкиасП"
+        ],
+		"correct_answer": "талкиасП",
+        "difficulty": 4
+    },
+    {
+        "question_image": "assets/q18.jpg",
+        "options": [
+            "МЕНТЬЮ",
+            "УЯНЁОЫ",
+            "УЭНДОЫ",
+            "СЯНДМЫ"
+        ],
+		"correct_answer": "УЭНДОЫ",
+        "difficulty": 4
+    },
+    {
+        "question_image": "assets/q19.jpg",
+        "options": [
+            "42",
+            "14",
+            "36",
+            "21"
+        ],
+		"correct_answer": "21",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q20.jpg",
+        "options": [
+            "35",
+            "22",
+            "18",
+            "11"
+        ],
+		"correct_answer": "22",
+        "difficulty": 3
     }
 ]
