@@ -1,0 +1,114 @@
+[
+    {
+        "question_image": "assets/q6.jpg",
+        "options": [
+            "7",
+            "9",
+            "10",
+            "8",
+            "6"
+        ],
+		"correct_answer": "8",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q10.jpg",
+        "options": [
+            "Верно",
+            "Неверно",
+            "Невозможно определить"
+        ],
+		"correct_answer": "Верно",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q11.jpg",
+        "options": [
+            "Включить все выключатели одновременно",
+            "Включить один выключатель, затем выключить его и включить другой",
+            "Включить первый выключатель, подождать, выключить его, включить второй и зайти в комнату",
+            "Это невозможно"
+        ],
+		"correct_answer": "Включить первый выключатель, подождать, выключить его, включить второй и зайти в комнату",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q19.jpg",
+        "options": [
+            "42",
+            "14",
+            "36",
+            "21"
+        ],
+		"correct_answer": "21",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q20.jpg",
+        "options": [
+            "35",
+            "22",
+            "18",
+            "11"
+        ],
+		"correct_answer": "22",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q21.jpg",
+        "options": [
+            "Достаточно информации из утверждения 1",
+            "Достаточно информации из утверждения 2",
+            "Достаточно информации из утверждений 1 и 2",
+            "Информации недостаточно"
+        ],
+		"correct_answer": "Информации недостаточно",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q24.jpg",
+        "options": [
+            "22",
+            "24",
+            "26",
+            "27"
+        ],
+		"correct_answer": "24",
+        "difficulty": 4,
+        "hint": "Правило выбора високосных годов"
+    },
+    {
+        "question_image": "assets/q25.jpg",
+        "options": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F"
+        ],
+		"correct_answer": "D",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q26.jpg",
+        "options": [
+            "Чая",
+            "Молоко",
+            "Поровну того и другого"
+        ],
+		"correct_answer": "Поровну того и другого",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q27.jpg",
+        "options": [
+            "Анастасия",
+            "Марина",
+            "Рита",
+            "Лидия",
+            "Диана"
+        ],
+		"correct_answer": "Диана",
+        "difficulty": 3
+    }
+]

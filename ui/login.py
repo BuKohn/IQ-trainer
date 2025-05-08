@@ -1,13 +1,13 @@
 from PySide6.QtCore import Signal, Qt
-from PySide6.QtWidgets import QVBoxLayout, QWidget, QLineEdit, QPushButton, QLabel
+from PySide6.QtWidgets import QVBoxLayout, QWidget, QLineEdit, QLabel
 from psycopg2 import sql
-
+from core.clickable_button import ClickableButton
 from core.db import connect_db
 
 
 class Login(QWidget):
     registration_signal = Signal()
-    logged_signal = Signal(str, int, list)
+    logged_signal = Signal(str, int, list, list)
     return_to_menu_signal = Signal()
 
     def __init__(self):
@@ -75,15 +75,15 @@ class Login(QWidget):
 
         layout.addLayout(password_layout)
 
-        self.login_button = QPushButton("Войти", self)
+        self.login_button = ClickableButton("Войти", self)
         self.login_button.clicked.connect(self.login)
 
         layout.addWidget(self.login_button)
 
-        self.register_button = QPushButton("Зарегистрироваться", self)
+        self.register_button = ClickableButton("Зарегистрироваться", self)
         self.register_button.clicked.connect(self.show_registration_page)
 
-        self.return_to_menu_button = QPushButton("Вернуться в меню", self)
+        self.return_to_menu_button = ClickableButton("Вернуться в меню", self)
         self.return_to_menu_button.clicked.connect(self.return_to_menu)
 
         buttons_layout = QVBoxLayout()
@@ -106,7 +106,7 @@ class Login(QWidget):
         try:
             # Проверка существования пользователя
             cursor.execute(
-                sql.SQL("SELECT username, password, high_score, achievements FROM users WHERE username = %s"),
+                sql.SQL("SELECT username, password, high_score, achievements, tests_scores FROM users WHERE username = %s"),
                 (username,)
             )
             user = cursor.fetchone()
@@ -115,7 +115,7 @@ class Login(QWidget):
             if user is not None:
                 if user[1] == password:
                     # Успешная авторизация
-                    self.logged(user[0], user[2], user[3])
+                    self.logged(user[0], user[2], user[3], user[4])
                     self.return_to_menu()
                     self.clear_errors()  # Очищаем ошибки
                     return True
@@ -143,8 +143,8 @@ class Login(QWidget):
         self.username_input.clear()
         self.password_input.clear()
 
-    def logged(self, username, score, achievements):
-        self.logged_signal.emit(username, score, achievements)
+    def logged(self, username, score, achievements, user_scores):
+        self.logged_signal.emit(username, score, achievements, user_scores)
 
     def show_registration_page(self):
         self.registration_signal.emit()
@@ -221,14 +221,14 @@ class Registration(QWidget):
 
         layout.addLayout(password_layout)
 
-        self.register_button = QPushButton("Зарегистрироваться", self)
+        self.register_button = ClickableButton("Зарегистрироваться", self)
         self.register_button.clicked.connect(self.register)
         layout.addWidget(self.register_button)
 
-        self.login_button = QPushButton("Авторизоваться", self)
+        self.login_button = ClickableButton("Авторизоваться", self)
         self.login_button.clicked.connect(self.show_login_page)
 
-        self.return_to_menu_button = QPushButton("Вернуться в меню", self)
+        self.return_to_menu_button = ClickableButton("Вернуться в меню", self)
         self.return_to_menu_button.clicked.connect(self.return_to_menu)
 
         buttons_layout = QVBoxLayout()

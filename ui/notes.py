@@ -1,5 +1,7 @@
 from PySide6.QtCore import Qt, Signal, QStringListModel, QRect
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QGridLayout, QListView
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGridLayout, QListView
+
+from core.clickable_button import ClickableButton
 
 
 class Notes(QWidget):
@@ -57,18 +59,18 @@ class Notes(QWidget):
 
         # Кнопки управления
         button_layout = QHBoxLayout()
-        self.add_button = QPushButton("+ Добавить сайт")
+        self.add_button = ClickableButton("+ Добавить сайт")
         self.add_button.clicked.connect(self.add_item)
         button_layout.addWidget(self.add_button)
 
-        self.remove_button = QPushButton("- Удалить сайт")
+        self.remove_button = ClickableButton("- Удалить сайт")
         self.remove_button.clicked.connect(self.remove_item)
         button_layout.addWidget(self.remove_button)
 
         layout_inside_container.addLayout(button_layout)
 
         # Кнопка возврата в меню
-        self.return_to_menu_button = QPushButton("Вернуться в меню")
+        self.return_to_menu_button = ClickableButton("Вернуться в меню")
         self.return_to_menu_button.clicked.connect(self.return_to_menu)
         layout_inside_container.addWidget(self.return_to_menu_button)
 

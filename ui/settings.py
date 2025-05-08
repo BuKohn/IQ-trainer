@@ -1,5 +1,7 @@
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QGridLayout
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGridLayout
+
+from core.clickable_button import ClickableButton
 
 
 class Settings(QWidget):
@@ -24,19 +26,19 @@ class Settings(QWidget):
         self.score_label = QLabel()
         self.score_label.setFixedHeight(50)
 
-        back1 = QPushButton("1")
+        back1 = ClickableButton("1")
         back1.clicked.connect(lambda: self.choose_background(1))
-        self.back2 = QPushButton("2")
+        self.back2 = ClickableButton("2")
         self.back2.setEnabled(False)
         self.back2.clicked.connect(lambda: self.choose_background(2))
-        self.back3 = QPushButton("3")
+        self.back3 = ClickableButton("3")
         self.back3.setEnabled(False)
         self.back3.clicked.connect(lambda: self.choose_background(3))
-        self.back4 = QPushButton("4")
+        self.back4 = ClickableButton("4")
         self.back4.setEnabled(False)
         self.back4.clicked.connect(lambda: self.choose_background(4))
 
-        back_button = QPushButton("Вернуться в меню")
+        back_button = ClickableButton("Вернуться в меню")
         back_button.clicked.connect(self.return_to_menu)
 
         back2_layout = QVBoxLayout()
@@ -68,10 +70,10 @@ class Settings(QWidget):
         self.size_label.setFixedHeight(50)
 
         self.change_size_layout = QHBoxLayout()
-        normal_size_button = QPushButton("Обычный размер")
+        normal_size_button = ClickableButton("Обычный размер")
         normal_size_button.setFixedHeight(50)
         normal_size_button.clicked.connect(lambda: self.change_text_size(False))
-        big_size_button = QPushButton("Большой размер")
+        big_size_button = ClickableButton("Большой размер")
         big_size_button.setFixedHeight(50)
         big_size_button.clicked.connect(lambda: self.change_text_size(True))
         self.change_size_layout.addWidget(normal_size_button)

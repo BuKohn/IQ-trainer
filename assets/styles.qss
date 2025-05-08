@@ -31,6 +31,18 @@ QLineEdit:focus {
     border: 2px solid rgb(45, 97, 100);
     outline: none;
 }
+QTextEdit {
+    background-color: rgb(255, 253, 253);
+    border: 2px solid rgb(55, 107, 113);
+    border-radius: 5px;
+    padding: 8px;
+    font: Poor Richard;
+    color: rgb(55, 107, 113);
+}
+QTextEdit:focus {
+    border: 2px solid rgb(45, 97, 100);
+    outline: none;
+}
 QSlider {
     background-color: transparent; /* Прозрачный фон */
 }

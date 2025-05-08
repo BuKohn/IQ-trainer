@@ -5,5 +5,11 @@
         "Международный тест на IQ https://iq-test-international.net/ru",
         "Мозгун https://mozgun.ru/"
     ],
-    "styles": "assets/big_styles.qss"
+    "styles": "assets/styles.qss",
+    "user_scores": [
+        60,
+        20,
+        30,
+        20
+    ]
 }

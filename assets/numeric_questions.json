@@ -1,0 +1,116 @@
+[
+    {
+        "question_image": "assets/q1.jpg",
+        "options": [
+            "22 и 24",
+            "22 и 25",
+            "23 и 24",
+            "23 и 25",
+            "24 и 25"
+        ],
+		"correct_answer": "22 и 24",
+        "difficulty": 4,
+        "hint": "Здесь переплетены две последовательности"
+	},
+    {
+        "question_image": "assets/q3.jpg",
+        "options": [
+            "84 129",
+            "32 418",
+            "47 632",
+            "36 119",
+            "67 626",
+            "72 927"
+        ],
+		"correct_answer": "47 632",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q7.jpg",
+        "options": [
+            "2,5 и 3",
+            "6,75 и 1",
+            "4,5 и 15,625",
+            "2 и 1"
+        ],
+		"correct_answer": "2,5 и 3",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q9.jpg",
+        "options": [
+            "28",
+            "40",
+            "33",
+            "32"
+        ],
+		"correct_answer": "33",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q13.jpg",
+        "options": [
+            "8",
+            "10",
+            "81",
+            "30"
+        ],
+		"correct_answer": "10",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q14.jpg",
+        "options": [
+            "64",
+            "1089",
+            "36",
+            "9"
+        ],
+		"correct_answer": "36",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q15.jpg",
+        "options": [
+            "18",
+            "21",
+            "22",
+            "16"
+        ],
+		"correct_answer": "18",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q22.jpg",
+        "options": [
+            "104",
+            "107",
+            "109",
+            "111"
+        ],
+		"correct_answer": "109",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q23.jpg",
+        "options": [
+            "21",
+            "22",
+            "27",
+            "32"
+        ],
+		"correct_answer": "32",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q31.jpg",
+        "options": [
+            "32",
+            "12",
+            "56",
+            "96"
+        ],
+		"correct_answer": "96",
+        "difficulty": 3
+    }
+]

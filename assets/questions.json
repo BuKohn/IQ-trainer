@@ -9,7 +9,8 @@
             "24 и 25"
         ],
 		"correct_answer": "22 и 24",
-        "difficulty": 4
+        "difficulty": 4,
+        "hint": "Здесь переплетены две последовательности"
 	},
     {
         "question_image": "assets/q2.jpg",
@@ -191,7 +192,8 @@
             "талкиасП"
         ],
 		"correct_answer": "талкиасП",
-        "difficulty": 4
+        "difficulty": 4,
+        "hint": "Варианты ответа - аннаграммы"
     },
     {
         "question_image": "assets/q18.jpg",
@@ -202,7 +204,8 @@
             "СЯНДМЫ"
         ],
 		"correct_answer": "УЭНДОЫ",
-        "difficulty": 4
+        "difficulty": 4,
+        "hint": "Здесь переплетены два шифра"
     },
     {
         "question_image": "assets/q19.jpg",
@@ -224,6 +227,141 @@
             "11"
         ],
 		"correct_answer": "22",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q21.jpg",
+        "options": [
+            "Достаточно информации из утверждения 1",
+            "Достаточно информации из утверждения 2",
+            "Достаточно информации из утверждений 1 и 2",
+            "Информации недостаточно"
+        ],
+		"correct_answer": "Информации недостаточно",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q22.jpg",
+        "options": [
+            "104",
+            "107",
+            "109",
+            "111"
+        ],
+		"correct_answer": "109",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q22.jpg",
+        "options": [
+            "104",
+            "107",
+            "109",
+            "111"
+        ],
+		"correct_answer": "109",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q23.jpg",
+        "options": [
+            "21",
+            "22",
+            "27",
+            "32"
+        ],
+		"correct_answer": "32",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q24.jpg",
+        "options": [
+            "22",
+            "24",
+            "26",
+            "27"
+        ],
+		"correct_answer": "24",
+        "difficulty": 4,
+        "hint": "Правило выбора високосных годов"
+    },
+    {
+        "question_image": "assets/q25.jpg",
+        "options": [
+            "A",
+            "C",
+            "D",
+            "E",
+            "F"
+        ],
+		"correct_answer": "D",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q26.jpg",
+        "options": [
+            "Чая",
+            "Молоко",
+            "Поровну того и другого"
+        ],
+		"correct_answer": "Поровну того и другого",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q27.jpg",
+        "options": [
+            "Анастасия",
+            "Марина",
+            "Рита",
+            "Лидия",
+            "Диана"
+        ],
+		"correct_answer": "Диана",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q28.jpg",
+        "options": [
+            "6С1М",
+            "618113",
+            "У15А12",
+            "ФСБМ"
+        ],
+		"correct_answer": "6С1М",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q29.jpg",
+        "options": [
+            "Злокозненный",
+            "Антогонистический",
+            "Конфиденциальный",
+            "Враждебный",
+            "Недоброжелательный"
+        ],
+		"correct_answer": "Конфиденциальный",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q30.jpg",
+        "options": [
+            "ПОРЫВ",
+            "ШТОРМ",
+            "МОЛНИЯ",
+            "ГРОМ"
+        ],
+		"correct_answer": "ШТОРМ",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q31.jpg",
+        "options": [
+            "32",
+            "12",
+            "56",
+            "96"
+        ],
+		"correct_answer": "96",
         "difficulty": 3
     }
 ]

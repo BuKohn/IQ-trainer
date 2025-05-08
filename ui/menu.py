@@ -1,13 +1,14 @@
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QFont
-from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QVBoxLayout, QPushButton, QApplication
-
+from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QVBoxLayout, QApplication, QPushButton
+from core.clickable_button import ClickableButton
 
 class Menu(QWidget):
     start_quiz_signal = Signal()
     show_settings_signal = Signal()
+    stats_signal = Signal()
     login_signal = Signal()
     notes_signal = Signal()
+    feedback_signal = Signal()
 
     def __init__(self):
         super().__init__()
@@ -34,22 +35,30 @@ class Menu(QWidget):
         self.menu_layout.addLayout(verticalLayout)
         self.menu_layout.addStretch()
 
-        play_button = QPushButton("Играть")
+        play_button = ClickableButton("Играть")
         play_button.setFixedWidth(500)
         play_button.clicked.connect(self.start_quiz)
         verticalLayout.addWidget(play_button)
 
-        login_button = QPushButton("Авторизоваться/Зарегистрироваться")
+        login_button = ClickableButton("Авторизоваться/Зарегистрироваться")
         login_button.clicked.connect(self.show_login_form)
         verticalLayout.addWidget(login_button)
 
-        settings_button = QPushButton("Настройки")
+        settings_button = ClickableButton("Настройки")
         settings_button.clicked.connect(self.show_settings)
         verticalLayout.addWidget(settings_button)
 
-        notes_button = QPushButton("Полезные сайты")
+        stats_button = ClickableButton("Статистика")
+        stats_button.clicked.connect(self.show_stats)
+        verticalLayout.addWidget(stats_button)
+
+        notes_button = ClickableButton("Полезные сайты")
         notes_button.clicked.connect(self.show_notes)
         verticalLayout.addWidget(notes_button)
+
+        feedback_button = ClickableButton("Оставить отзыв")
+        feedback_button.clicked.connect(self.show_feedback)
+        verticalLayout.addWidget(feedback_button)
 
         exit_button = QPushButton("Выход")
         verticalLayout.addWidget(exit_button)
@@ -67,8 +76,14 @@ class Menu(QWidget):
     def show_settings(self):
         self.show_settings_signal.emit()
 
+    def show_stats(self):
+        self.stats_signal.emit()
+
     def show_login_form(self):
         self.login_signal.emit()
 
     def show_notes(self):
         self.notes_signal.emit()
+
+    def show_feedback(self):
+        self.feedback_signal.emit()

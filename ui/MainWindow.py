@@ -1,7 +1,8 @@
 import json
 import os
-from lib2to3.pgen2.driver import load_grammar
+import threading
 
+import pygame
 from PySide6.QtCore import Qt, QLocale
 from PySide6.QtWidgets import QMainWindow, QStackedWidget, QLabel
 from psycopg2 import sql
@@ -11,7 +12,9 @@ from ui.quiz import Quiz
 from ui.settings import Settings
 from ui.login import Login, Registration
 from ui.notes import Notes
+from ui.feedback import Feedback
 from core.db import connect_db
+from ui.statistics import Statistics
 
 
 class MainWindow(QMainWindow):
@@ -19,6 +22,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.settings_file = "core/settings.json"
         self.useful_links = self.load_setting("useful_links", [])
+        self.user_scores = self.load_setting("user_scores", [])
         self.username = None
         self.user_score = 0
         self.user_achievements = []
@@ -55,6 +59,17 @@ class MainWindow(QMainWindow):
         except FileNotFoundError:
             print(f"Файл стилей не найден")
 
+    def _play_music_in_thread(self):
+        """Воспроизводит музыку."""
+        pygame.mixer.music.play(loops=-1)
+
+    def play_background_music(self):
+        """Запускает фоновую музыку"""
+        pygame.mixer.init()
+        pygame.mixer.music.load("assets/background_music.mp3")
+        self.music_thread = threading.Thread(target=self._play_music_in_thread, daemon=True)
+        self.music_thread.start()
+
     def setup_ui(self):
         self.setStyleSheet(f"""
         QMainWindow{{
@@ -66,6 +81,8 @@ class MainWindow(QMainWindow):
         }}
         """)
 
+        self.play_background_music()
+
         self.stacked_widget = QStackedWidget(self)
         self.setCentralWidget(self.stacked_widget)
 
@@ -76,9 +93,11 @@ class MainWindow(QMainWindow):
         self.menu_widget.show_settings_signal.connect(self.show_settings)
         self.menu_widget.login_signal.connect(self.show_login_page)
         self.menu_widget.notes_signal.connect(self.show_notes)
+        self.menu_widget.feedback_signal.connect(self.show_feedback)
+        self.menu_widget.stats_signal.connect(self.show_stats)
         self.stacked_widget.addWidget(self.menu_widget)
 
-        self.quiz_widget = Quiz(self.user_achievements)
+        self.quiz_widget = Quiz(self.username,self.user_achievements)
         self.stacked_widget.addWidget(self.quiz_widget)
 
         self.settings_widget = Settings()
@@ -101,6 +120,14 @@ class MainWindow(QMainWindow):
         self.notes_widget = Notes(self.useful_links)
         self.notes_widget.return_to_menu_signal.connect(self.save_useful_links)
         self.stacked_widget.addWidget(self.notes_widget)
+
+        self.feedback_widget = Feedback()
+        self.feedback_widget.return_to_menu_signal.connect(self.return_to_menu)
+        self.stacked_widget.addWidget(self.feedback_widget)
+
+        self.stats_widget = Statistics(self.user_scores)
+        self.stats_widget.return_to_menu_signal.connect(self.return_to_menu)
+        self.stacked_widget.addWidget(self.stats_widget)
 
         self.show()
 
@@ -126,17 +153,23 @@ class MainWindow(QMainWindow):
         self.save_setting("styles", filepath)
         self.apply_styles()
 
-    def logged(self, username, score, achievements):
+    def logged(self, username, score, achievements, user_scores):
         self.username = username
         self.menu_widget.account_label.setVisible(True)
         self.user_score = score
         self.user_achievements = achievements
-        print(self.user_achievements)
+        self.user_scores = user_scores
+        self.stats_widget.update_bar_chart(self.user_scores)
+        print(self.user_scores)
 
     def update_score_and_achievements(self, score, achievements):
+        self.user_scores.append(score)
+        self.stats_widget.update_bar_chart(self.user_scores)
         if score >= self.user_score:
             self.user_score = score
         self.user_achievements = list(dict.fromkeys(self.user_achievements + achievements))
+        if not self.username:
+            self.save_setting("user_scores", self.user_scores)
         if self.username:
             conn = connect_db()
             cursor = conn.cursor()
@@ -149,6 +182,10 @@ class MainWindow(QMainWindow):
                 cursor.execute(
                     sql.SQL("UPDATE users SET achievements = %s WHERE username = %s"),
                     (self.user_achievements, self.username)
+                )
+                cursor.execute(
+                    sql.SQL("UPDATE users SET tests_scores = %s WHERE username = %s"),
+                    (self.user_scores, self.username)
                 )
                 conn.commit()
             except Exception as e:
@@ -166,7 +203,7 @@ class MainWindow(QMainWindow):
 
     def start_quiz(self):
         self.stacked_widget.removeWidget(self.quiz_widget)
-        self.quiz_widget = Quiz(self.user_achievements)
+        self.quiz_widget = Quiz(self.username ,self.user_achievements)
         self.quiz_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.quiz_widget.update_score_and_achievements_signal.connect(self.update_score_and_achievements)
         self.stacked_widget.insertWidget(1, self.quiz_widget)
@@ -186,3 +223,9 @@ class MainWindow(QMainWindow):
 
     def show_notes(self):
         self.stacked_widget.setCurrentIndex(5)
+
+    def show_feedback(self):
+        self.stacked_widget.setCurrentIndex(6)
+
+    def show_stats(self):
+        self.stacked_widget.setCurrentIndex(7)

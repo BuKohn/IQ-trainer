@@ -1,0 +1,130 @@
+[
+    {
+        "question_image": "assets/q2.jpg",
+        "options": [
+            "Конгрегация",
+            "Дисперсия",
+            "Компиляция",
+            "Собрание",
+            "Скопление"
+        ],
+		"correct_answer": "Дисперсия",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q4.jpg",
+        "options": [
+            "ИУ",
+            "ЙХ",
+            "РЗ",
+            "ЧЦ",
+            "МЪ"
+        ],
+		"correct_answer": "ЙХ",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q5.jpg",
+        "options": [
+            "Достигнутый, очевидный",
+            "Производный, судорожный",
+            "Произоводный, загадочный",
+            "Достигнутый, разработанный",
+            "Очевидный, загадочный"
+        ],
+		"correct_answer": "Очевидный, загадочный",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q8.jpg",
+        "options": [
+            "Вертеп, первач",
+            "Стропа, пастор",
+            "Левкас, портал",
+            "Тарпан, кошмар",
+            "Стропа, морока"
+        ],
+		"correct_answer": "Стропа, пастор",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q12.jpg",
+        "options": [
+            "СОБАКА : ДВЕРЬ",
+            "ОБЪЕКТИВ : КАМЕРА",
+            "КЕТЧУП : МАЙОНЕЗ",
+            "САПОГИ : ТУФЛИ"
+        ],
+		"correct_answer": "ОБЪЕКТИВ : КАМЕРА",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/q16.jpg",
+        "options": [
+            "Кор",
+            "Сор",
+            "Рог",
+            "Ром"
+        ],
+		"correct_answer": "Рог",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q17.jpg",
+        "options": [
+            "инчуКаоп",
+            "нрАамикое",
+            "сессрЭпо",
+            "талкиасП"
+        ],
+		"correct_answer": "талкиасП",
+        "difficulty": 4,
+        "hint": "Варианты ответа - аннаграммы"
+    },
+    {
+        "question_image": "assets/q18.jpg",
+        "options": [
+            "МЕНТЬЮ",
+            "УЯНЁОЫ",
+            "УЭНДОЫ",
+            "СЯНДМЫ"
+        ],
+		"correct_answer": "УЭНДОЫ",
+        "difficulty": 4,
+        "hint": "Здесь переплетены два шифра"
+    },
+    {
+        "question_image": "assets/q28.jpg",
+        "options": [
+            "6С1М",
+            "618113",
+            "У15А12",
+            "ФСБМ"
+        ],
+		"correct_answer": "6С1М",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/q29.jpg",
+        "options": [
+            "Злокозненный",
+            "Антогонистический",
+            "Конфиденциальный",
+            "Враждебный",
+            "Недоброжелательный"
+        ],
+		"correct_answer": "Конфиденциальный",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/q30.jpg",
+        "options": [
+            "ПОРЫВ",
+            "ШТОРМ",
+            "МОЛНИЯ",
+            "ГРОМ"
+        ],
+		"correct_answer": "ШТОРМ",
+        "difficulty": 3
+    }
+]
