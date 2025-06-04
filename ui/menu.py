@@ -1,6 +1,7 @@
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import QWidget, QLabel, QSizePolicy, QHBoxLayout, QVBoxLayout, QApplication, QPushButton
 from core.clickable_button import ClickableButton
+from ui.text import text
 
 class Menu(QWidget):
     start_quiz_signal = Signal()
@@ -9,9 +10,11 @@ class Menu(QWidget):
     login_signal = Signal()
     notes_signal = Signal()
     feedback_signal = Signal()
+    custom_quiz_signal = Signal()
 
-    def __init__(self):
+    def __init__(self, lang):
         super().__init__()
+        self.lang = lang
         self.setup_ui()
 
     def setup_ui(self):
@@ -35,40 +38,56 @@ class Menu(QWidget):
         self.menu_layout.addLayout(verticalLayout)
         self.menu_layout.addStretch()
 
-        play_button = ClickableButton("Играть")
-        play_button.setFixedWidth(500)
-        play_button.clicked.connect(self.start_quiz)
-        verticalLayout.addWidget(play_button)
+        self.play_button = ClickableButton(text[self.lang]["menu"]["play_btn"])
+        self.play_button.setFixedWidth(500)
+        self.play_button.clicked.connect(self.start_quiz)
+        verticalLayout.addWidget(self.play_button)
 
-        login_button = ClickableButton("Авторизоваться/Зарегистрироваться")
-        login_button.clicked.connect(self.show_login_form)
-        verticalLayout.addWidget(login_button)
+        self.login_button = ClickableButton(text[self.lang]["menu"]["login_btn"])
+        self.login_button.clicked.connect(self.show_login_form)
+        verticalLayout.addWidget(self.login_button)
 
-        settings_button = ClickableButton("Настройки")
-        settings_button.clicked.connect(self.show_settings)
-        verticalLayout.addWidget(settings_button)
+        self.settings_button = ClickableButton(text[self.lang]["menu"]["settings_btn"])
+        self.settings_button.clicked.connect(self.show_settings)
+        verticalLayout.addWidget(self.settings_button)
 
-        stats_button = ClickableButton("Статистика")
-        stats_button.clicked.connect(self.show_stats)
-        verticalLayout.addWidget(stats_button)
+        self.stats_button = ClickableButton(text[self.lang]["menu"]["stats_btn"])
+        self.stats_button.clicked.connect(self.show_stats)
+        verticalLayout.addWidget(self.stats_button)
 
-        notes_button = ClickableButton("Полезные сайты")
-        notes_button.clicked.connect(self.show_notes)
-        verticalLayout.addWidget(notes_button)
+        self.custom_quiz_button = ClickableButton(text[self.lang]["menu"]["custom_quiz_btn"])
+        self.custom_quiz_button.clicked.connect(self.show_custom_quiz)
+        verticalLayout.addWidget(self.custom_quiz_button)
 
-        feedback_button = ClickableButton("Оставить отзыв")
-        feedback_button.clicked.connect(self.show_feedback)
-        verticalLayout.addWidget(feedback_button)
+        self.notes_button = ClickableButton(text[self.lang]["menu"]["notes_btn"])
+        self.notes_button.clicked.connect(self.show_notes)
+        verticalLayout.addWidget(self.notes_button)
 
-        exit_button = QPushButton("Выход")
-        verticalLayout.addWidget(exit_button)
-        exit_button.clicked.connect(QApplication.quit)
+        self.feedback_button = ClickableButton(text[self.lang]["menu"]["feedback_btn"])
+        self.feedback_button.clicked.connect(self.show_feedback)
+        verticalLayout.addWidget(self.feedback_button)
 
-        self.account_label = QLabel("Вы вошли в аккаунт!")
+        self.exit_button = QPushButton(text[self.lang]["menu"]["exit_btn"])
+        verticalLayout.addWidget(self.exit_button)
+        self.exit_button.clicked.connect(QApplication.quit)
+
+        self.account_label = QLabel(text[self.lang]["menu"]["account_label"])
         self.account_label.setVisible(False)
         self.menu_layout.addWidget(self.account_label)
 
         self.setLayout(self.menu_layout)
+
+    def apply_language(self, lang):
+        self.lang = lang
+        self.play_button.setText(text[self.lang]["menu"]["play_btn"])
+        self.login_button.setText(text[self.lang]["menu"]["login_btn"])
+        self.settings_button.setText(text[self.lang]["menu"]["settings_btn"])
+        self.stats_button.setText(text[self.lang]["menu"]["stats_btn"])
+        self.custom_quiz_button.setText(text[self.lang]["menu"]["custom_quiz_btn"])
+        self.notes_button.setText(text[self.lang]["menu"]["notes_btn"])
+        self.feedback_button.setText(text[self.lang]["menu"]["feedback_btn"])
+        self.exit_button.setText(text[self.lang]["menu"]["exit_btn"])
+        self.account_label.setText(text[self.lang]["menu"]["account_label"])
 
     def start_quiz(self):
         self.start_quiz_signal.emit()
@@ -87,3 +106,6 @@ class Menu(QWidget):
 
     def show_feedback(self):
         self.feedback_signal.emit()
+
+    def show_custom_quiz(self):
+        self.custom_quiz_signal.emit()

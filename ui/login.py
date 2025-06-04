@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QVBoxLayout, QWidget, QLineEdit, QLabel
 from psycopg2 import sql
 from core.clickable_button import ClickableButton
 from core.db import connect_db
+from ui.text import text
 
 
 class Login(QWidget):
@@ -10,8 +11,9 @@ class Login(QWidget):
     logged_signal = Signal(str, int, list, list)
     return_to_menu_signal = Signal()
 
-    def __init__(self):
+    def __init__(self, lang):
         super().__init__()
+        self.lang = lang
         self.setup_ui()
 
     def setup_ui(self):
@@ -28,10 +30,10 @@ class Login(QWidget):
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(15)
 
-        login_label = QLabel("Авторизация")
-        login_label.setFixedHeight(50)
-        login_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        login_label.setStyleSheet("""
+        self.login_label = QLabel(text[self.lang]["login"]["title_login"])
+        self.login_label.setFixedHeight(50)
+        self.login_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.login_label.setStyleSheet("""
             QLabel {
                 font-family: 'Arial'; 
                 font-size: 24px;
@@ -42,12 +44,12 @@ class Login(QWidget):
             }
         """)
 
-        layout.addWidget(login_label)
+        layout.addWidget(self.login_label)
 
         self.username_input = QLineEdit(self)
-        self.username_input.setPlaceholderText("Имя пользователя")
+        self.username_input.setPlaceholderText(text[self.lang]["login"]["username_input"])
 
-        self.username_error_label = QLabel("*Неверное имя пользователя", self)
+        self.username_error_label = QLabel(text[self.lang]["login"]["username_err"], self)
         self.username_error_label.setFixedSize(200, 25)
         self.username_error_label.setStyleSheet("color: red; background-color: transparent; border: none;")
         self.username_error_label.setVisible(False)
@@ -60,10 +62,10 @@ class Login(QWidget):
         layout.addLayout(login_layout)
 
         self.password_input = QLineEdit(self)
-        self.password_input.setPlaceholderText("Пароль")
+        self.password_input.setPlaceholderText(text[self.lang]["login"]["password_input"])
         self.password_input.setEchoMode(QLineEdit.Password)
 
-        self.password_error_label = QLabel("*Неверный пароль", self)
+        self.password_error_label = QLabel(text[self.lang]["login"]["password_err"], self)
         self.password_error_label.setFixedSize(200, 25)
         self.password_error_label.setStyleSheet("color: red; background-color: transparent; border: none;")
         self.password_error_label.setVisible(False)
@@ -75,15 +77,15 @@ class Login(QWidget):
 
         layout.addLayout(password_layout)
 
-        self.login_button = ClickableButton("Войти", self)
+        self.login_button = ClickableButton(text[self.lang]["login"]["login_btn"], self)
         self.login_button.clicked.connect(self.login)
 
         layout.addWidget(self.login_button)
 
-        self.register_button = ClickableButton("Зарегистрироваться", self)
+        self.register_button = ClickableButton(text[self.lang]["login"]["reg_btn"], self)
         self.register_button.clicked.connect(self.show_registration_page)
 
-        self.return_to_menu_button = ClickableButton("Вернуться в меню", self)
+        self.return_to_menu_button = ClickableButton(text[self.lang]["login"]["back_button"], self)
         self.return_to_menu_button.clicked.connect(self.return_to_menu)
 
         buttons_layout = QVBoxLayout()
@@ -149,6 +151,17 @@ class Login(QWidget):
     def show_registration_page(self):
         self.registration_signal.emit()
 
+    def apply_language(self, lang):
+        self.lang = lang
+        self.login_label.setText(text[self.lang]["login"]["title_login"])
+        self.username_input.setPlaceholderText(text[self.lang]["login"]["username_input"])
+        self.username_error_label.setText(text[self.lang]["login"]["username_err"])
+        self.password_input.setPlaceholderText(text[self.lang]["login"]["password_input"])
+        self.password_error_label.setText(text[self.lang]["login"]["password_err"])
+        self.login_button.setText(text[self.lang]["login"]["login_btn"])
+        self.register_button.setText(text[self.lang]["login"]["reg_btn"])
+        self.return_to_menu_button.setText(text[self.lang]["login"]["back_button"])
+
     def return_to_menu(self):
         self.return_to_menu_signal.emit()
 
@@ -157,8 +170,9 @@ class Registration(QWidget):
     login_signal = Signal()
     return_to_menu_signal = Signal()
 
-    def __init__(self):
+    def __init__(self, lang):
         super().__init__()
+        self.lang = lang
         self.setup_ui()
 
     def setup_ui(self):
@@ -174,10 +188,10 @@ class Registration(QWidget):
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(15)
 
-        login_label = QLabel("Регистрация")
-        login_label.setFixedHeight(50)
-        login_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        login_label.setStyleSheet("""
+        self.login_label = QLabel(text[self.lang]["login"]["title_reg"])
+        self.login_label.setFixedHeight(50)
+        self.login_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.login_label.setStyleSheet("""
                     QLabel {
                         font-family: 'Arial'; 
                         font-size: 24px;
@@ -188,10 +202,10 @@ class Registration(QWidget):
                     }
                 """)
 
-        layout.addWidget(login_label)
+        layout.addWidget(self.login_label)
 
         self.username_input = QLineEdit(self)
-        self.username_input.setPlaceholderText("Имя пользователя")
+        self.username_input.setPlaceholderText(text[self.lang]["login"]["username_input"])
 
         self.username_error_label = QLabel("", self)
         self.username_error_label.setFixedSize(500, 50)
@@ -206,10 +220,10 @@ class Registration(QWidget):
         layout.addLayout(login_layout)
 
         self.password_input = QLineEdit(self)
-        self.password_input.setPlaceholderText("Пароль")
+        self.password_input.setPlaceholderText(text[self.lang]["login"]["password_input"])
         self.password_input.setEchoMode(QLineEdit.Password)
 
-        self.password_error_label = QLabel("*Пароль должен быть больше 4 символов", self)
+        self.password_error_label = QLabel(text[self.lang]["login"]["password_reg_err"], self)
         self.password_error_label.setFixedSize(200, 25)
         self.password_error_label.setStyleSheet("color: red; background-color: transparent; border: none;")
         self.password_error_label.setVisible(False)  # Изначально скрыт
@@ -221,14 +235,14 @@ class Registration(QWidget):
 
         layout.addLayout(password_layout)
 
-        self.register_button = ClickableButton("Зарегистрироваться", self)
+        self.register_button = ClickableButton(text[self.lang]["login"]["reg_btn"], self)
         self.register_button.clicked.connect(self.register)
         layout.addWidget(self.register_button)
 
-        self.login_button = ClickableButton("Авторизоваться", self)
+        self.login_button = ClickableButton(text[self.lang]["login"]["title_login"], self)
         self.login_button.clicked.connect(self.show_login_page)
 
-        self.return_to_menu_button = ClickableButton("Вернуться в меню", self)
+        self.return_to_menu_button = ClickableButton(text[self.lang]["login"]["back_button"], self)
         self.return_to_menu_button.clicked.connect(self.return_to_menu)
 
         buttons_layout = QVBoxLayout()
@@ -277,6 +291,16 @@ class Registration(QWidget):
 
     def show_login_page(self):
         self.login_signal.emit()
+
+    def apply_language(self, lang):
+        self.lang = lang
+        self.login_label.setText(text[self.lang]["login"]["title_reg"])
+        self.username_input.setPlaceholderText(text[self.lang]["login"]["username_input"])
+        self.password_error_label.setText(text[self.lang]["login"]["password_reg_err"])
+        self.password_input.setPlaceholderText(text[self.lang]["login"]["password_input"])
+        self.register_button.setText(text[self.lang]["login"]["reg_btn"])
+        self.login_button.setText(text[self.lang]["login"]["title_login"])
+        self.return_to_menu_button.setText(text[self.lang]["login"]["back_button"])
 
     def return_to_menu(self):
         self.return_to_menu_signal.emit()

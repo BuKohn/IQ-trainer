@@ -4,12 +4,14 @@ from PySide6.QtWidgets import (
 )
 import requests
 from core.clickable_button import ClickableButton
+from ui.text import text
 
 class Feedback(QWidget):
     return_to_menu_signal = Signal()
 
-    def __init__(self):
+    def __init__(self, lang):
         super().__init__()
+        self.lang = lang
         self.form_url = "https://docs.google.com/forms/d/e/1FAIpQLSfzfEBPogDHWSQ-rzaxMU3pxI-xk73B7MEK1Djg57YDDwuMQw/formResponse"
         self.field_names = {
             "name": "entry.601811216",
@@ -32,10 +34,10 @@ class Feedback(QWidget):
         layout_inside_container.setAlignment(Qt.AlignTop)
         layout_inside_container.setContentsMargins(20, 20, 20, 20)  # Внутренние отступы
 
-        title = QLabel("Оставить отзыв")
-        title.setFixedHeight(50)
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setStyleSheet("""
+        self.title = QLabel(text[self.lang]["feedback"]["title"])
+        self.title.setFixedHeight(50)
+        self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.title.setStyleSheet("""
                             QLabel {
                                 font-family: 'Arial'; 
                                 font-size: 24px;
@@ -46,16 +48,16 @@ class Feedback(QWidget):
                             }
                         """)
 
-        layout_inside_container.addWidget(title)
+        layout_inside_container.addWidget(self.title)
 
         self.name_input = QLineEdit()
-        self.name_input.setPlaceholderText("Введите ваше имя...")
+        self.name_input.setPlaceholderText(text[self.lang]["feedback"]["name_place"])
         layout_inside_container.addWidget(self.name_input)
         self.feedback_text = QTextEdit()
-        self.feedback_text.setPlaceholderText("Введите ваш отзыв здесь...")
+        self.feedback_text.setPlaceholderText(text[self.lang]["feedback"]["feedback_place"])
         layout_inside_container.addWidget(self.feedback_text)
 
-        self.send_button = ClickableButton("Отправить отзыв")
+        self.send_button = ClickableButton(text[self.lang]["feedback"]["send_btn"])
         self.send_button.clicked.connect(self.send_feedback)
         layout_inside_container.addWidget(self.send_button)
 
@@ -65,7 +67,7 @@ class Feedback(QWidget):
         self.error_label.setVisible(False)
         layout_inside_container.addWidget(self.error_label)
 
-        self.return_to_menu_button = ClickableButton("Вернуться в меню")
+        self.return_to_menu_button = ClickableButton(text[self.lang]["feedback"]["back_btn"])
         self.return_to_menu_button.clicked.connect(self.return_to_menu)
         layout_inside_container.addWidget(self.return_to_menu_button)
 
@@ -75,7 +77,7 @@ class Feedback(QWidget):
         feedback = self.feedback_text.toPlainText().strip()
 
         if not name or not feedback:
-            self.error_label.setText("*Пожалуйста, заполните все поля")
+            self.error_label.setText(text[self.lang]["feedback"]["err_lbl"])
             self.error_label.setVisible(True)
             return
 
@@ -99,6 +101,16 @@ class Feedback(QWidget):
         except Exception as e:
             self.error_label.setText(f"*Ошибка: {str(e)}")
             self.error_label.setVisible(True)
+
+    def apply_language(self, lang):
+        self.lang = lang
+        self.title.setText(text[self.lang]["feedback"]["title"])
+        self.name_input.setPlaceholderText(text[self.lang]["feedback"]["name_place"])
+        self.feedback_text.setPlaceholderText(text[self.lang]["feedback"]["feedback_place"])
+        self.send_button.setText(text[self.lang]["feedback"]["send_btn"])
+        self.return_to_menu_button.setText(text[self.lang]["feedback"]["back_btn"])
+        if self.error_label.isVisible():
+            self.error_label.setText(text[self.lang]["feedback"]["err_lbl"])
 
     def return_to_menu(self):
         self.return_to_menu_signal.emit()

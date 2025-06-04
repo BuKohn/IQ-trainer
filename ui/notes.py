@@ -1,14 +1,15 @@
 from PySide6.QtCore import Qt, Signal, QStringListModel, QRect
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QGridLayout, QListView
-
 from core.clickable_button import ClickableButton
+from ui.text import text
 
 
 class Notes(QWidget):
     return_to_menu_signal = Signal(list)
 
-    def __init__(self, useful_links):
+    def __init__(self, useful_links, lang):
         super().__init__()
+        self.lang = lang
         self.useful_links = useful_links
         self.setup_ui()
 
@@ -27,10 +28,10 @@ class Notes(QWidget):
         layout_inside_container.setAlignment(Qt.AlignTop)
         layout_inside_container.setContentsMargins(20, 20, 20, 20)  # Внутренние отступы
 
-        title = QLabel("Полезные сайты")
-        title.setFixedHeight(50)
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        title.setStyleSheet("""
+        self.title = QLabel(text[self.lang]["notes"]["title"])
+        self.title.setFixedHeight(50)
+        self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.title.setStyleSheet("""
                     QLabel {
                         font-family: 'Arial'; 
                         font-size: 24px;
@@ -41,7 +42,7 @@ class Notes(QWidget):
                     }
                 """)
 
-        layout_inside_container.addWidget(title)
+        layout_inside_container.addWidget(self.title)
 
         # QListView для отображения списка
         self.model = QStringListModel()
@@ -59,25 +60,25 @@ class Notes(QWidget):
 
         # Кнопки управления
         button_layout = QHBoxLayout()
-        self.add_button = ClickableButton("+ Добавить сайт")
+        self.add_button = ClickableButton(text[self.lang]["notes"]["add_btn"])
         self.add_button.clicked.connect(self.add_item)
         button_layout.addWidget(self.add_button)
 
-        self.remove_button = ClickableButton("- Удалить сайт")
+        self.remove_button = ClickableButton(text[self.lang]["notes"]["rmv_btn"])
         self.remove_button.clicked.connect(self.remove_item)
         button_layout.addWidget(self.remove_button)
 
         layout_inside_container.addLayout(button_layout)
 
         # Кнопка возврата в меню
-        self.return_to_menu_button = ClickableButton("Вернуться в меню")
+        self.return_to_menu_button = ClickableButton(text[self.lang]["notes"]["back_btn"])
         self.return_to_menu_button.clicked.connect(self.return_to_menu)
         layout_inside_container.addWidget(self.return_to_menu_button)
 
     def add_item(self):
         """Добавляет новый элемент в список."""
         current_list = self.model.stringList()
-        current_list.append("Добавьте запись")
+        current_list.append(text[self.lang]["notes"]["item_btn"])
         self.model.setStringList(current_list)
 
     def remove_item(self):
@@ -94,6 +95,13 @@ class Notes(QWidget):
 
         # Обновляем модель
         self.model.setStringList(current_list)
+
+    def apply_language(self, lang):
+        self.lang = lang
+        self.title.setText(text[self.lang]["notes"]["title"])
+        self.add_button.setText(text[self.lang]["notes"]["add_btn"])
+        self.remove_button.setText(text[self.lang]["notes"]["rmv_btn"])
+        self.return_to_menu_button.setText(text[self.lang]["notes"]["back_btn"])
 
     def return_to_menu(self):
         self.useful_links = self.model.stringList()

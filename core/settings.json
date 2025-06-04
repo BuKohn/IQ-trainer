@@ -3,13 +3,26 @@
     "useful_links": [
         "Академия Хана https://ru.khanacademy.org/",
         "Международный тест на IQ https://iq-test-international.net/ru",
-        "Мозгун https://mozgun.ru/"
+        "Мозгун https://mozgun.ru/",
+        "ChatGPT https://chatgpt.org/"
     ],
     "styles": "assets/styles.qss",
     "user_scores": [
         60,
         20,
         30,
-        20
-    ]
+        20,
+        40,
+        20,
+        20,
+        0,
+        40,
+        90,
+        60,
+        90,
+        10,
+        40,
+        50
+    ],
+    "language": "ru"
 }

@@ -4,10 +4,13 @@ import threading
 
 import pygame
 from PySide6.QtCore import Qt, QLocale
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QMainWindow, QStackedWidget, QLabel
 from psycopg2 import sql
 
+from ui.custom_quiz import CustomQuiz
 from ui.menu import Menu
+from ui.question_constructor import QuestionConstructor
 from ui.quiz import Quiz
 from ui.settings import Settings
 from ui.login import Login, Registration
@@ -15,12 +18,16 @@ from ui.notes import Notes
 from ui.feedback import Feedback
 from core.db import connect_db
 from ui.statistics import Statistics
+from ui.text import text
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowIcon(QIcon("app_icon.ico"))
+        self.setWindowTitle("IQ-trainer")
         self.settings_file = "core/settings.json"
+        self.lang = self.load_setting("language", "ru")
         self.useful_links = self.load_setting("useful_links", [])
         self.user_scores = self.load_setting("user_scores", [])
         self.username = None
@@ -88,46 +95,57 @@ class MainWindow(QMainWindow):
 
         self.apply_styles()
 
-        self.menu_widget = Menu()
+        self.menu_widget = Menu(self.lang)
         self.menu_widget.start_quiz_signal.connect(self.start_quiz)
         self.menu_widget.show_settings_signal.connect(self.show_settings)
         self.menu_widget.login_signal.connect(self.show_login_page)
         self.menu_widget.notes_signal.connect(self.show_notes)
         self.menu_widget.feedback_signal.connect(self.show_feedback)
         self.menu_widget.stats_signal.connect(self.show_stats)
+        self.menu_widget.custom_quiz_signal.connect(self.show_custom_quiz)
         self.stacked_widget.addWidget(self.menu_widget)
 
-        self.quiz_widget = Quiz(self.username,self.user_achievements)
+        self.quiz_widget = Quiz(self.username,self.user_achievements, self.lang)
         self.stacked_widget.addWidget(self.quiz_widget)
 
-        self.settings_widget = Settings()
+        self.settings_widget = Settings(self.lang)
         self.settings_widget.choose_background_signal.connect(self.choose_background)
+        self.settings_widget.change_language_signal.connect(self.change_language)
         self.settings_widget.change_text_size_signal.connect(self.change_text_size)
         self.settings_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.stacked_widget.addWidget(self.settings_widget)
 
-        self.login_widget = Login()
+        self.login_widget = Login(self.lang)
         self.login_widget.registration_signal.connect(self.show_registration_page)
         self.login_widget.logged_signal.connect(self.logged)
         self.login_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.stacked_widget.addWidget(self.login_widget)
 
-        self.registration_widget = Registration()
+        self.registration_widget = Registration(self.lang)
         self.registration_widget.login_signal.connect(self.show_login_page)
         self.registration_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.stacked_widget.addWidget(self.registration_widget)
 
-        self.notes_widget = Notes(self.useful_links)
+        self.notes_widget = Notes(self.useful_links, self.lang)
         self.notes_widget.return_to_menu_signal.connect(self.save_useful_links)
         self.stacked_widget.addWidget(self.notes_widget)
 
-        self.feedback_widget = Feedback()
+        self.feedback_widget = Feedback(self.lang)
         self.feedback_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.stacked_widget.addWidget(self.feedback_widget)
 
-        self.stats_widget = Statistics(self.user_scores)
+        self.stats_widget = Statistics(self.user_scores, self.lang)
         self.stats_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.stacked_widget.addWidget(self.stats_widget)
+
+        self.custom_quiz_widget = CustomQuiz(self.lang)
+        self.custom_quiz_widget.return_to_menu_signal.connect(self.return_to_menu)
+        self.custom_quiz_widget.add_question_signal.connect(self.add_question)
+        self.stacked_widget.addWidget(self.custom_quiz_widget)
+
+        self.question_constructor_widget = QuestionConstructor(self.lang)
+        self.question_constructor_widget.return_to_custom_quiz_signal.connect(self.show_custom_quiz)
+        self.stacked_widget.addWidget(self.question_constructor_widget)
 
         self.show()
 
@@ -148,6 +166,20 @@ class MainWindow(QMainWindow):
         """)
         self.save_setting("background_image", backs[choice])
 
+    def change_language(self, is_english):
+        self.lang = "en" if is_english else "ru"
+        self.save_setting("language", "en") if is_english else self.save_setting("language", "ru")
+        self.custom_quiz_widget.apply_language(self.lang)
+        self.question_constructor_widget.apply_language(self.lang)
+        self.menu_widget.apply_language(self.lang)
+        self.settings_widget.apply_language(self.lang, self.user_score)
+        self.login_widget.apply_language(self.lang)
+        self.registration_widget.apply_language(self.lang)
+        self.feedback_widget.apply_language(self.lang)
+        self.stats_widget.apply_language(self.lang)
+        self.notes_widget.apply_language(self.lang)
+
+
     def change_text_size(self, is_big):
         filepath = "assets/big_styles.qss" if is_big else "assets/styles.qss"
         self.save_setting("styles", filepath)
@@ -160,7 +192,6 @@ class MainWindow(QMainWindow):
         self.user_achievements = achievements
         self.user_scores = user_scores
         self.stats_widget.update_bar_chart(self.user_scores)
-        print(self.user_scores)
 
     def update_score_and_achievements(self, score, achievements):
         self.user_scores.append(score)
@@ -203,14 +234,14 @@ class MainWindow(QMainWindow):
 
     def start_quiz(self):
         self.stacked_widget.removeWidget(self.quiz_widget)
-        self.quiz_widget = Quiz(self.username ,self.user_achievements)
+        self.quiz_widget = Quiz(self.username ,self.user_achievements, self.lang)
         self.quiz_widget.return_to_menu_signal.connect(self.return_to_menu)
         self.quiz_widget.update_score_and_achievements_signal.connect(self.update_score_and_achievements)
         self.stacked_widget.insertWidget(1, self.quiz_widget)
         self.stacked_widget.setCurrentIndex(1)
 
     def show_settings(self):
-        self.settings_widget.score_label.setText(f"Ваш лучший счёт: {self.user_score}")
+        self.settings_widget.score_label.setText(text[self.lang]["settings"]["score"].format(score=self.user_score))
         self.settings_widget.back_buttons_block(self.user_score)
         self.settings_widget.update_achievement_labels(self.user_achievements)
         self.stacked_widget.setCurrentIndex(2)
@@ -229,3 +260,13 @@ class MainWindow(QMainWindow):
 
     def show_stats(self):
         self.stacked_widget.setCurrentIndex(7)
+
+    def show_custom_quiz(self):
+        self.stacked_widget.setCurrentIndex(8)
+        self.custom_quiz_widget.load_custom_questions()
+        self.custom_quiz_widget.populate_questions()
+
+    def add_question(self):
+        self.stacked_widget.setCurrentIndex(9)
+        self.question_constructor_widget.load_custom_questions()
+        self.question_constructor_widget.clear_fields()

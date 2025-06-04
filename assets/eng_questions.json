@@ -1,0 +1,119 @@
+[
+    {
+        "question_image": "assets/qe1.jpg",
+        "options": [
+            "22 and 24",
+            "22 and 25",
+            "23 and 24",
+            "23 and 25",
+            "24 and 25"
+        ],
+        "correct_answer": "22 and 24",
+        "difficulty": 4,
+        "hint": "Two sequences are intertwined here."
+    },
+    {
+        "question_image": "assets/qe2.jpg",
+        "options": [
+            "Congregation",
+            "Dispersion",
+            "Compilation",
+            "Gathering",
+            "Accumulation"
+        ],
+        "correct_answer": "Dispersion",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/qe3.jpg",
+        "options": [
+            "84 129",
+            "32 418",
+            "47 632",
+            "36 119",
+            "67 626",
+            "72 927"
+        ],
+        "correct_answer": "47 632",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/qe4.jpg",
+        "options": [
+            "IU",
+            "JH",
+            "RZ",
+            "CH"
+        ],
+        "correct_answer": "JH",
+        "difficulty": 2
+    },
+    {
+        "question_image": "assets/qe5.jpg",
+        "options": [
+            "Achieved, Obvious",
+            "Derived, Spasmodic",
+            "Derived, Mysterious",
+            "Achieved, Developed",
+            "Obvious, Mysterious"
+        ],
+        "correct_answer": "Obvious, Mysterious",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/qe6.jpg",
+        "options": [
+            "7",
+            "9",
+            "10",
+            "8",
+            "6"
+        ],
+        "correct_answer": "8",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/qe7.jpg",
+        "options": [
+            "2.5 and 3",
+            "6.75 and 1",
+            "4.5 and 15.625",
+            "2 and 1"
+        ],
+        "correct_answer": "2.5 and 3",
+        "difficulty": 3
+    },
+    {
+        "question_image": "assets/qe8.jpg",
+        "options": [
+            "Vertep, Pervach",
+            "Stropa, Pastor",
+            "Levkas, Portal",
+            "Tarpans, Nightmare",
+            "Stropa, Moroka"
+        ],
+        "correct_answer": "Stropa, Pastor",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/qe9.jpg",
+        "options": [
+            "28",
+            "40",
+            "33",
+            "32"
+        ],
+        "correct_answer": "33",
+        "difficulty": 1
+    },
+    {
+        "question_image": "assets/qe10.jpg",
+        "options": [
+            "True",
+            "False",
+            "Cannot be determined"
+        ],
+        "correct_answer": "True",
+        "difficulty": 2
+    }
+]
